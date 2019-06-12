@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-12 notifications">
+    <div *ngIf="statusCode; else processing">
+      <div *ngIf="statusCode === 201" [ngClass] = "'alert alert-success alert-dismissible fade show'">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Contact added successfully.
+      </div>   
+      <div *ngIf="statusCode === 409" [ngClass] = "'alert alert-danger alert-dismissible fade show'">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Contact already exists.
+      </div>   	
+      <div *ngIf="statusCode === 200" [ngClass] = "'alert alert-success alert-dismissible fade show'">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Contact updated successfully.
+      </div>   	      
+      <div *ngIf="statusCode === 204" [ngClass] = "'alert alert-success alert-dismissible fade show'">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Contact deleted successfully.
+      </div>   	   
+      <div *ngIf="statusCode === 500" [ngClass] = "'alert alert-danger alert-dismissible fade show'">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Internal Server Error.
+      </div>	
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-4 p-3 p-md-4 contact-block border" *ngFor="let contact of allContacts; let i = index">
+        <!-- <h3>{{i + 1}}. {{contact.title}}</h3> -->
+        <h4>{{contact.firstname}}</h4>
+        <div>{{contact.mobile}}</div>
+        <div class="action-btn-group" *ngIf="allContacts.length > 1">
+          <a class="btn btn-primary" routerLink="/view/{{contact.id}}"><span class="icon icon-view"></span></a>
+          <button type="button" class="btn btn-secondary ml-3" data-toggle="modal" data-target="#CreateUpdateModal" (click)="loadContactToEdit(contact.id)"><span class="icon icon-edit"></span></button>
+          <button type="button" class="btn btn-danger ml-3" (click)="deleteContact(contact.id)"><span class="icon icon-delete"></span></button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-success add-contact-btn" data-toggle="modal" data-target="#CreateUpdateModal"><span class="icon icon-plus"></span></button>
+    </div>
+  </div>
+</div>
+<!-- The Modal -->
+<div class="modal fade" id="CreateUpdateModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form [formGroup]="contactForm" (ngSubmit)="onContactFormSubmit()">             
+        <div class="modal-header">
+          <h4 id="DynamicPopupName" class="modal-title"></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="firstname">Enter First Name:</label>
+                <input type="text" class="form-control" formControlName="firstname">
+                <label *ngIf="contactForm.get('firstname').invalid && processValidation" [ngClass] = "'error'"> First Name is required. </label>
+              </div>
+              <div class="form-group">
+                <label for="mobile">Enter Mobile Number:</label>
+                <input type="text" class="form-control" formControlName="mobile">
+                <label *ngIf="contactForm.get('mobile').invalid && processValidation" [ngClass] = "'error'"> Mobile Number is required. </label>
+              </div>    
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" *ngIf="!contactIdToUpdate">CREATE</button>  
+          <button class="btn btn-primary" *ngIf="contactIdToUpdate">UPDATE</button>  
+          <button class="btn btn-secondary" (click)="backToCreateContact()" data-dismiss="modal">Go Back</button>  
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<ng-template #processing>
+	<img *ngIf="requestProcessing" src="assets/images/loading.gif">
+</ng-template>
