@@ -13,7 +13,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Start Json server
 
-Go to `src/json` folder and run `json-server --watch db.json` to start watching database changes and run the project properly.
+Go to `src/json` folder and run `json-server --watch db.json` to start watching database changes and run the project properly. Navigate to `http://localhost:3000` for JSON Server and `http://localhost:3000/contacts` for editing contacts. 
 
 ## Code scaffolding
 
