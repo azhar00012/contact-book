@@ -12,20 +12,29 @@
 }
 .action-btn-group {
     display: none;
+    @media screen and (max-width:768px) {
+        display: flex;
+        margin-top: 10px;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
 }
 
 .contact-block{
-    &:hover {
-        .action-btn-group {
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.2);
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    @media screen and (min-width:769px) {        
+        &:hover {
+            .action-btn-group {
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.2);
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
     }
 }
